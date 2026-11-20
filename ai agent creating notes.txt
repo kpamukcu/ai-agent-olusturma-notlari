@@ -1,10 +1,9 @@
-##### Yapay Zeka Agent Hazırlama #####
+##### Yapay Zeka (AI) Agent Hazırlama #####
 
 Ders 1.1 — AI Agent nedir ve hangi görevler için hazırlanır?
-1. Önce AI Agent kavramını anlayalım
-En basit tanımıyla:
 
-AI Agent, kendisine verilen bir hedefi gerçekleştirmek için bilgi toplayabilen, değerlendirme yapabilen, karar verebilen ve belirli işlemleri gerçekleştirebilen yapay zekâ destekli sistemdir.
+1. Önce AI Agent kavramı
+En basit tanımıyla: AI Agent, kendisine verilen bir hedefi gerçekleştirmek için bilgi toplayabilen, değerlendirme yapabilen, karar verebilen ve belirli işlemleri gerçekleştirebilen yapay zekâ destekli sistemdir.
 
 Burada önemli olan kelime hedef.
 
@@ -13,6 +12,7 @@ Normal bir yapay zekâ sohbetinde sen soru sorarsın, yapay zekâ cevap verir.
 Bir AI Agent'ta ise sen bir hedef belirlersin. Agent bu hedefe ulaşmak için gerekli görevleri yerine getirir.
 
 2. Bir Agent hazırlamadan önce neye karar vermeliyiz?
+
 Bir Agent oluşturmaya başlamadan önce beş soruya cevap vermeliyiz:
 1. Görevi nedir? Hangi problemi çözecek?
 2. Bilgiyi nereden alacak? Doküman, Excel, internet veya başka kaynaklar?
