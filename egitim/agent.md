@@ -10,6 +10,7 @@ Projenin temel modülleri:
 1. Eğitim Yönetimi
 2. Sınıf Yönetimi
 3. Öğrenci Yönetimi
+4. Bitirme Projesi ve Değerlendirme
 
 Uygulama yalnızca web tabanlı geliştirilecektir. Mobil uygulama geliştirilmesi proje kapsamında değildir.
 
@@ -196,7 +197,6 @@ Kurallar:
 Kursun tahmini bitiş tarihi, eğitim tanımındaki toplam ders saati ve haftalık ders saati bilgileri ile öğrencinin kursa başlama tarihi kullanılarak hesaplanmalıdır.
 
 Hesaplama için kullanılacak bilgiler:
-
 - Eğitim toplam süresi (saat)
 - Haftalık ders saati
 - Kursa başlama tarihi
@@ -215,7 +215,6 @@ Formül:
 `Tahmini Bitiş Tarihi = Kursa Başlama Tarihi + (Eğitim Süresi (Hafta) × 7 gün)`
 
 Örnek:
-
 - Toplam eğitim süresi: 40 saat
 - Haftalık ders saati: 8 saat
 - Kursa başlama tarihi: 01.12.2026
@@ -257,7 +256,63 @@ Backend, seçilen sınıfın gerçekten seçilen eğitime ait olduğunu doğrula
 - Öğrencinin kayıtlı olduğu sınıfları görüntüleme
 - Eğitim kayıtlarının durumlarını görüntüleme ve yönetme
 
-## 4. Veritabanı Tasarımı
+# 3.4 Bitirme Projesi ve Değerlendirme
+
+Her öğrenci, katıldığı eğitimin sonunda bir bitirme projesi gönderebilmelidir.
+
+Eğitmen, öğrencinin gönderdiği bitirme projesini inceleyerek değerlendirme puanı girebilmelidir.
+
+### Bitirme Projesi Bilgileri
+
+Her bitirme projesi ilgili Enrollment kaydıyla ilişkilendirilmelidir.
+
+Tutulacak bilgiler:
+- İlgili öğrenci-eğitim kaydı (Enrollment)
+- Proje gönderim bilgisi
+- Proje gönderim tarihi
+- Eğitmen değerlendirme puanı
+- Değerlendirme tarihi
+
+### İşleyiş
+
+1. Öğrenci, katıldığı eğitimin sonunda bitirme projesini gönderir.
+2. Proje, öğrencinin ilgili Enrollment kaydına bağlanır.
+3. Eğitmen gönderilen projeyi inceler.
+4. Eğitmen değerlendirme puanını sisteme girer.
+5. Puan ilgili öğrenci-eğitim kaydına kaydedilir.
+6. Öğrencinin detay sayfasında bitirme projesi ve değerlendirme puanı görüntülenir.
+
+### Değerlendirme Kuralları
+- Bitirme projesi her eğitim katılımı için ayrı tutulmalıdır.
+- Aynı öğrenci aynı eğitime tekrar katıldığında önceki proje ve puan kayıtları korunmalıdır.
+- Eğitmenin girdiği puan ilgili Enrollment kaydıyla ilişkilendirilmelidir.
+- Puan değeri için kullanılacak minimum ve maksimum aralık teknik tasarım öncesinde ürün sahibine sorulmalıdır.
+- Puanın kim tarafından verildiği ve değerlendirme tarihi takip edilebilmelidir.
+- Değerlendirme bilgileri yetkisiz kullanıcılar tarafından değiştirilememelidir.
+
+### Puan Bildirim E-postası
+
+Eğitmen öğrencinin bitirme projesi puanını sisteme kaydettiğinde öğrencinin sistemde kayıtlı e-posta adresine bilgilendirme e-postası gönderilmelidir.
+
+E-posta içeriğinde:
+- Öğrencinin adı
+- İlgili eğitim adı
+- Bitirme projesinden aldığı puan
+- Değerlendirme tarihi
+bulunmalıdır.
+
+Kurallar:
+- E-posta, puan veritabanına başarıyla kaydedildikten sonra gönderilmelidir.
+- E-posta alıcısı öğrencinin sistemde kayıtlı e-posta adresi olmalıdır.
+- E-posta içeriğindeki puan ve eğitim bilgileri ilgili Enrollment kaydından alınmalıdır.
+- Puan kaydı başarısız olduğunda e-posta gönderilmemelidir.
+- E-posta gönderiminde hata oluşursa puan kaydı kaybolmamalı veya geri alınmamalıdır.
+- E-posta gönderim hataları loglanmalı ve takip edilebilir olmalıdır.
+- E-posta gönderim yöntemi ve sağlayıcısı teknik tasarım aşamasında belirlenmeli ve ürün sahibinin onayına sunulmalıdır.
+- E-posta servis bilgileri güvenli ortam değişkenlerinde saklanmalıdır.
+- E-posta gönderim işlemi için gerekli güvenlik ve hata yönetimi uygulanmalıdır.
+
+# 4. Veritabanı Tasarımı
 
 Temel veritabanı modelleri:
 
@@ -266,8 +321,10 @@ Temel veritabanı modelleri:
 3. Student
 4. Enrollment
 5. CurriculumFile
+6. CapstoneProject (Bitirme Projesi)
 
 ### Education
+
 Eğitim bilgilerini tutar.
 
 Temel alanlar:
@@ -281,6 +338,7 @@ Temel alanlar:
 - updatedAt
 
 ### Classroom
+
 Sınıf bilgilerini tutar.
 
 Temel alanlar:
@@ -291,6 +349,7 @@ Temel alanlar:
 - updatedAt
 
 ### Student
+
 Öğrencinin kişisel bilgilerini tutar.
 
 Temel alanlar:
@@ -303,6 +362,7 @@ Temel alanlar:
 - updatedAt
 
 ### Enrollment
+
 Öğrencinin bir eğitime katılım kaydını tutar.
 
 Temel alanlar:
@@ -318,6 +378,7 @@ Temel alanlar:
 Tahmini bitiş tarihi, eğitim süresi ve haftalık ders saati üzerinden hesaplanmalıdır. Hesaplamanın hangi noktada saklanacağı veya dinamik olarak üretileceği teknik tasarım aşamasında değerlendirilerek tutarlı bir yöntem belirlenmelidir.
 
 ### CurriculumFile
+
 Eğitime ait müfredat dosyalarını tutar.
 
 Temel alanlar:
@@ -330,6 +391,22 @@ Temel alanlar:
 - fileSize
 - createdAt
 
+### CapstoneProject
+
+Öğrencinin ilgili eğitim katılımı için gönderdiği bitirme projesini ve değerlendirme bilgilerini tutar.
+
+Temel alanlar:
+- id
+- enrollmentId
+- projectSubmissionInfo
+- submissionDate
+- score
+- evaluationDate
+- createdAt
+- updatedAt
+
+Bitirme projesi dosya olarak gönderilecekse dosyanın saklanması için gerekli alanlar teknik tasarım aşamasında belirlenecek ve ürün sahibinin onayına sunulacaktır.
+
 ### Model İlişkileri
 
 - Education 1:N Classroom
@@ -337,10 +414,13 @@ Temel alanlar:
 - Education 1:N CurriculumFile
 - Student 1:N Enrollment
 - Classroom 1:N Enrollment
+- Enrollment 1:N veya 1:1 CapstoneProject (proje gönderim ve yeniden değerlendirme gereksinimleri netleştirildikten sonra kesinleştirilecektir).
 
 Bir öğrenci ile bir eğitim arasındaki ilişki Enrollment üzerinden kurulmalıdır.
 
 Aynı öğrenci ve aynı eğitim arasında birden fazla Enrollment kaydı oluşturulmasına izin verilmelidir.
+
+Bitirme projesi ve değerlendirme bilgileri öğrenciye doğrudan değil, ilgili Enrollment kaydına bağlanmalıdır.
 
 ## 5. Veri Bütünlüğü ve Güvenlik
 
@@ -349,6 +429,9 @@ Aynı öğrenci ve aynı eğitim arasında birden fazla Enrollment kaydı oluşt
 - Sınıfın bağlı olduğu eğitim ile Enrollment kaydındaki eğitim birbiriyle tutarlı olmalıdır.
 - Aynı öğrenci aynı eğitime tekrar kaydedilebilmelidir.
 - Önceki Enrollment kayıtları korunmalıdır.
+- Bitirme projesi ve puan ilgili Enrollment kaydıyla ilişkilendirilmelidir.
+- Öğrenci e-posta adresi doğrulanmalıdır.
+- E-posta gönderim hataları puan kaydını etkilememelidir.
 - İlişkili verilerin silinmesi veri kaybına yol açmamalıdır.
 - Silme davranışı (soft delete, restrict veya uygun başka bir yöntem) geliştirme öncesi teknik tasarımda açıklanmalı ve ürün sahibinin onayına sunulmalıdır.
 - Kullanıcı girdileri backend tarafında doğrulanmalıdır.
@@ -357,8 +440,6 @@ Aynı öğrenci ve aynı eğitim arasında birden fazla Enrollment kaydı oluşt
 - Hatalar kullanıcıya anlaşılır, geliştiriciye takip edilebilir şekilde raporlanmalıdır.
 
 ## 6. Geliştirme Süreci ve Sprint Yönetimi
-
-Proje sprint bazlı geliştirilecektir.
 
 Önerilen sprint sıralaması:
 
@@ -407,13 +488,23 @@ Proje sprint bazlı geliştirilecektir.
 - Orijinal dosyanın saklanması
 - Okunan metnin düzenlenmesi ve kaydedilmesi
 
-### Sprint 6 – Entegrasyon ve Genel Test
+### Sprint 6 – Bitirme Projesi ve Değerlendirme
+- Bitirme projesi gönderim bilgilerinin kaydedilmesi
+- Bitirme projesinin ilgili Enrollment kaydına bağlanması
+- Eğitmen değerlendirme puanının girilmesi
+- Değerlendirme tarihinin kaydedilmesi
+- Öğrenci detayında proje ve puan bilgilerinin gösterilmesi
+- Puan kaydedildiğinde öğrenciye e-posta bildirimi gönderilmesi
+- E-posta gönderim hata yönetimi ve testleri
+
+### Sprint 7 – Entegrasyon ve Genel Test
 - Modüller arası entegrasyon
 - Veri bütünlüğü testleri
 - API testleri
 - Form doğrulama testleri
 - Hata senaryoları
 - Güvenlik kontrolleri
+- E-posta bildirim testleri
 - Genel kullanıcı akışlarının test edilmesi
 
 Bu sprint sıralaması başlangıç planıdır. Her sprintin ayrıntılı görevleri, kabul kriterleri ve tahmini süresi ayrıca hazırlanıp ürün sahibinin onayına sunulmalıdır.
@@ -452,6 +543,7 @@ Claude bu projede teknik geliştirme sorumlusu olarak görev yapacaktır.
 - Teknik bir engel veya gereksinim çelişkisi oluşursa kullanıcıya bilgi verilmelidir.
 
 ### Test ve Raporlama
+
 Her sprint sonunda:
 - Yapılan işlemler listelenmelidir.
 - Değiştirilen ve oluşturulan dosyalar belirtilmelidir.
